@@ -25,11 +25,11 @@ function setNewWord() {
 
 // ランク判定
 function getRank(score) {
-  if (score >= 15) return "S";
-  if (score >= 12) return "A";
-  if (score >= 9) return "B";
-  if (score >= 6) return "C";
-  if (score >= 3) return "D";
+  if (score >= 1500) return "S";
+  if (score >= 1200) return "A";
+  if (score >= 900) return "B";
+  if (score >= 600) return "C";
+  if (score >= 300) return "D";
   return "E";
 }
 
@@ -118,7 +118,7 @@ function gameLoop() {
     // ゲームオーバー画面
     ctx.fillStyle = "red";
     ctx.font = "40px sans-serif";
-    ctx.fillText("退職", 130, 160);
+    ctx.fillText("退職", 90, 160);
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
