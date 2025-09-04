@@ -29,12 +29,12 @@ function setNewWord() {
 // ランク判定
 // ランク判定とメッセージ
 function getRankMessage(score) {
-  if (score >= 1500) return { rank: "S", message: "伝説のタイピスト！神業です！" };
-  if (score >= 1200) return { rank: "A", message: "素晴らしい！一流の腕前！" };
-  if (score >= 900)  return { rank: "B", message: "なかなか優秀です！" };
-  if (score >= 600)  return { rank: "C", message: "平均的な実力ですね。" };
-  if (score >= 300)  return { rank: "D", message: "まだまだ練習が必要です。" };
-  return { rank: "E", message: "初心者！これから頑張ろう！" };
+  if (score >= 1500) return { rank: "S", message: "給食の人" };
+  if (score >= 1200) return { rank: "A", message: "校長" };
+  if (score >= 900)  return { rank: "B", message: "教頭" };
+  if (score >= 600)  return { rank: "C", message: "教員" };
+  if (score >= 300)  return { rank: "D", message: "事務職員。" };
+  return { rank: "E", message: "ニート" };
 }
 
 
@@ -126,7 +126,7 @@ function gameLoop() {
     const result = getRankMessage(score); 
     ctx.fillStyle = "white";
   ctx.font = "40px sans-serif";
-  ctx.fillText(result.message, 50, 160);
+  ctx.fillText(result.message, 130, 160);
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
@@ -146,6 +146,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
