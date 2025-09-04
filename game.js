@@ -108,7 +108,7 @@ function gameLoop() {
     // スコア
     ctx.fillStyle = "yellow";
     ctx.font = "20px sans-serif";
-    ctx.fillText("給料: " + score+万円, 10, 30);
+    ctx.fillText("給料: " + score, 10, 30);
 
     // タイマー
     ctx.fillStyle = "red";
@@ -122,7 +122,7 @@ function gameLoop() {
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
-    ctx.fillText("給料: " + score+万円, 110, 210);
+    ctx.fillText("給料: " + score, 110, 210);
 
     const rank = getRank(score);
     ctx.fillStyle = "cyan";
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
