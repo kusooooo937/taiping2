@@ -24,13 +24,16 @@ function setNewWord() {
 }
 
 // ランク判定
-function getRank(score) {
-  if (score >= 1500) return "S";
-  if (score >= 1200) return "A";
-  if (score >= 900) return "B";
-  if (score >= 600) return "C";
-  if (score >= 300) return "D";
-  return "E";
+// ランク判定とメッセージ
+function getRankMessage(score) {
+  if (score >= 15) return { rank: "S", message: "伝説のタイピスト！神業です！" };
+  if (score >= 12) return { rank: "A", message: "素晴らしい！一流の腕前！" };
+  if (score >= 9)  return { rank: "B", message: "なかなか優秀です！" };
+  if (score >= 6)  return { rank: "C", message: "平均的な実力ですね。" };
+  if (score >= 3)  return { rank: "D", message: "まだまだ練習が必要です。" };
+  return { rank: "E", message: "初心者！これから頑張ろう！" };
+}
+
 }
 
 // キー入力イベント
@@ -116,18 +119,18 @@ function gameLoop() {
 
   } else if (gameState === "gameover") {
     // ゲームオーバー画面
-    ctx.fillStyle = "red";
-    ctx.font = "40px sans-serif";
-    ctx.fillText("退職", 90, 160);
+    ctx.fillStyle = "white";
+  ctx.font = "40px sans-serif";
+  ctx.fillText(result.message, 90, 160);
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
     ctx.fillText("給料: " + score + "万円", 130, 210);
 
-    const rank = getRank(score);
-    ctx.fillStyle = "cyan";
-    ctx.font = "36px sans-serif";
-    ctx.fillText("役職: " + rank, 130, 260);
+    const result = getRankMessage(score);
+  ctx.fillStyle = "cyan";
+  ctx.font = "36px sans-serif";
+  ctx.fillText("役職: " + result.rank, 130, 260);
 
     ctx.fillStyle = "white";
     ctx.font = "20px sans-serif";
@@ -139,6 +142,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
