@@ -128,7 +128,6 @@ function gameLoop() {
     ctx.font = "28px sans-serif";
     ctx.fillText("給料: " + score + "万円", 130, 210);
 
-    const result = getRankMessage(score);
   ctx.fillStyle = "cyan";
   ctx.font = "36px sans-serif";
   ctx.fillText("役職: " + result.rank, 130, 260);
@@ -143,6 +142,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
