@@ -127,7 +127,7 @@ function gameLoop() {
     const rank = getRank(score);
     ctx.fillStyle = "cyan";
     ctx.font = "36px sans-serif";
-    ctx.fillText("Rank: " + rank, 130, 260);
+    ctx.fillText("Rank: " + rank, 100, 260);
 
     ctx.fillStyle = "white";
     ctx.font = "20px sans-serif";
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
