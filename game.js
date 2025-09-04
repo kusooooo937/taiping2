@@ -1,3 +1,5 @@
+
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -7,6 +9,7 @@ const words = [
   "yamamoto","higuti","ruuku","igawa","fumuro","matui","ootani","kawaguti",
   "akane","sugai"
 ];
+
 let currentWord = "";
 let currentIndex = 0;
 let score = 0;
@@ -28,8 +31,8 @@ const errorSound   = new Audio("error.mp3");
 
 // BGM
 const bgm = new Audio("bgm.mp3");
-bgm.loop = true;   // 繰り返し再生
-bgm.volume = 0.2;  // 音量調整
+bgm.loop = true;
+bgm.volume = 0.2;
 
 // 新しい単語をセット
 function setNewWord() {
@@ -37,7 +40,7 @@ function setNewWord() {
   currentIndex = 0;
 }
 
-// ランク判定とメッセージ
+// ランク判定
 function getRankMessage(score) {
   if (score >= 1500) return { rank: "S", message: "給食の人" };
   if (score >= 1200) return { rank: "A", message: "校長" };
@@ -47,11 +50,49 @@ function getRankMessage(score) {
   return { rank: "E", message: "ニート" };
 }
 
+// 効果音安全再生
+function playSound(sound) {
+  const s = sound.cloneNode();
+  s.play();
+}
+
+// ゲーム開始
+function startGame() {
+  score = 0;
+  timeLeft = timeLimit;
+  gameState = "playing";
+  setNewWord();
+
+  // BGM再生（ユーザー操作後のみ）
+  if (bgm.paused) {
+    bgm.currentTime = 0;
+    bgm.play();
+  }
+
+  lastTime = performance.now();
+  requestAnimationFrame(updateTime);
+}
+
+// タイマー更新
+let lastTime = performance.now();
+function updateTime(now) {
+  const delta = (now - lastTime) / 1000;
+  lastTime = now;
+
+  if (gameState === "playing") {
+    timeLeft -= delta;
+    if (timeLeft <= 0) {
+      gameState = "gameover";
+      timeLeft = 0;
+    }
+  }
+
+  requestAnimationFrame(updateTime);
+}
+
 // キー入力イベント
 document.addEventListener("keydown", (e) => {
-  clickSound.currentTime = 0;
-  clickSound.play();
-
+  playSound(clickSound);
   const key = e.key;
 
   if (gameState === "start") {
@@ -63,12 +104,10 @@ document.addEventListener("keydown", (e) => {
       if (currentIndex === currentWord.length) {
         score += 100;
         setNewWord();
-        correctSound.currentTime = 0;
-        correctSound.play();
+        playSound(correctSound);
       }
     } else {
-      errorSound.currentTime = 0;
-      errorSound.play();
+      playSound(errorSound);
     }
 
   } else if (gameState === "gameover") {
@@ -76,55 +115,35 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ゲーム開始
-function startGame() {
-  score = 0;
-  timeLeft = timeLimit;
-  gameState = "playing";
-  setNewWord();
-
-  // BGM再生（止まっているときだけ）
-  if (bgm.paused) {
-    bgm.currentTime = 0;
-    bgm.play();
+// タッチでもゲーム開始
+canvas.addEventListener("touchstart", () => {
+  if (gameState === "start" || gameState === "gameover") {
+    startGame();
   }
-
-  // タイマー開始
-  let timer = setInterval(() => {
-    if (gameState === "playing") {
-      timeLeft--;
-      if (timeLeft <= 0) {
-        gameState = "gameover";
-        clearInterval(timer);
-      }
-    } else {
-      clearInterval(timer);
-    }
-  }, 1000);
-}
+});
 
 // ゲームループ
 function gameLoop() {
+  // 背景
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   if (gameState === "start") {
-    // タイトル画面
     ctx.fillStyle = "white";
     ctx.font = "36px sans-serif";
     ctx.fillText("Typing Game", 90, 150);
 
-    ctx.font = "24px sans-serif";
     ctx.fillStyle = "yellow";
-    ctx.fillText("Press Enter to Start", 90, 220);
+    ctx.font = "24px sans-serif";
+    ctx.fillText("Press Enter or Tap to Start", 40, 220);
 
   } else if (gameState === "playing") {
-    // 単語
+    // 単語表示
     ctx.fillStyle = "white";
     ctx.font = "32px sans-serif";
     ctx.fillText(currentWord, 100, 200);
 
-    // 入力済み部分を緑で表示
+    // 入力済み部分
     ctx.fillStyle = "lime";
     ctx.fillText(currentWord.substring(0, currentIndex), 100, 200);
 
@@ -135,11 +154,10 @@ function gameLoop() {
 
     // タイマー
     ctx.fillStyle = "red";
-    ctx.fillText("Time: " + timeLeft, 310, 30);
+    ctx.fillText("Time: " + Math.ceil(timeLeft), 310, 30);
 
   } else if (gameState === "gameover") {
-    // ゲームオーバー画面
-    const result = getRankMessage(score); 
+    const result = getRankMessage(score);
 
     ctx.fillStyle = "white";
     ctx.font = "40px sans-serif";
@@ -155,15 +173,14 @@ function gameLoop() {
 
     ctx.fillStyle = "white";
     ctx.font = "20px sans-serif";
-    ctx.fillText("Press Enter to Retry", 110, 320);
+    ctx.fillText("Press Enter or Tap to Retry", 60, 320);
   }
 
   requestAnimationFrame(gameLoop);
 }
 
-// ループ開始
+// ゲームループ開始
 gameLoop();
-
 
 
 
