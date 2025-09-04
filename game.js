@@ -29,7 +29,7 @@ const errorSound   = new Audio("error.mp3");
 // BGM
 const bgm = new Audio("bgm.mp3");
 bgm.loop = true;   // 繰り返し再生
-bgm.volume = 0.5;  // 音量調整
+bgm.volume = 0.2;  // 音量調整
 
 // 新しい単語をセット
 function setNewWord() {
@@ -163,6 +163,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
