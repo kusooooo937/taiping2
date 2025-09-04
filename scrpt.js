@@ -140,3 +140,4 @@ function gameLoop() {
 // ループ開始
 gameLoop();
 
+
