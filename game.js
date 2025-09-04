@@ -47,7 +47,7 @@ document.addEventListener("keydown", (e) => {
     if (key === currentWord[currentIndex]) {
       currentIndex++;
       if (currentIndex === currentWord.length) {
-        score++;
+        score+=100;
         setNewWord();
       }
     }
@@ -108,7 +108,7 @@ function gameLoop() {
     // スコア
     ctx.fillStyle = "yellow";
     ctx.font = "20px sans-serif";
-    ctx.fillText("Score: " + score + "万円", 10, 30);
+    ctx.fillText("給料: " + score + "万円", 10, 30);
 
     // タイマー
     ctx.fillStyle = "red";
@@ -118,7 +118,7 @@ function gameLoop() {
     // ゲームオーバー画面
     ctx.fillStyle = "red";
     ctx.font = "40px sans-serif";
-    ctx.fillText("GAME OVER", 90, 160);
+    ctx.fillText("退職", 90, 160);
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
