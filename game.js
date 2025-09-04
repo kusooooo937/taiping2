@@ -34,7 +34,7 @@ function getRankMessage(score) {
   return { rank: "E", message: "初心者！これから頑張ろう！" };
 }
 
-}
+
 
 // キー入力イベント
 document.addEventListener("keydown", (e) => {
@@ -119,6 +119,7 @@ function gameLoop() {
 
   } else if (gameState === "gameover") {
     // ゲームオーバー画面
+    const result = getRankMessage(score); 
     ctx.fillStyle = "white";
   ctx.font = "40px sans-serif";
   ctx.fillText(result.message, 90, 160);
@@ -142,6 +143,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
