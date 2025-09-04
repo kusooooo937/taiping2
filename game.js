@@ -45,31 +45,25 @@ document.addEventListener("keydown", (e) => {
   clickSound.play();
   const key = e.key;
 
-  if (gameState === "start") {
-    // スタート画面 → Enterキーで開始
-    if (key === "Enter") {
-      startGame();
-    }
-  } else if (gameState === "playing") {
-    // ゲーム中の入力処理
+ if (gameState === "start") {
+    if (key === "Enter") startGame();
+} else if (gameState === "playing") {
     if (key === currentWord[currentIndex]) {
-      currentIndex++;
-      if (currentIndex === currentWord.length) {
-        score+=100;
-        setNewWord();
-        correctSound.currentTime = 0;
-        correctSound.play();
-      }
-    }else {
-      // 入力が間違っている場合
-      errorSound.currentTime = 0;
-      errorSound.play();
-  } else if (gameState === "gameover") {
-    // ゲームオーバー → Enterキーでリトライ
-    if (key === "Enter") {
-      startGame();
+        currentIndex++;
+        if (currentIndex === currentWord.length) {
+            score += 100;
+            setNewWord();
+            correctSound.currentTime = 0;
+            correctSound.play();
+        }
+    } else {
+        errorSound.currentTime = 0;
+        errorSound.play();
     }
-  }
+} else if (gameState === "gameover") {
+    if (key === "Enter") startGame();
+}
+
 });
 
 // ゲーム開始
@@ -152,6 +146,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
