@@ -108,7 +108,7 @@ function gameLoop() {
     // スコア
     ctx.fillStyle = "yellow";
     ctx.font = "20px sans-serif";
-    ctx.fillText("Score: " + score, 10, 30);
+    ctx.fillText("Score: " + score万円, 10, 30);
 
     // タイマー
     ctx.fillStyle = "red";
@@ -122,16 +122,16 @@ function gameLoop() {
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
-    ctx.fillText("Final Score: " + score, 110, 210);
+    ctx.fillText("給料: " + Score万円, 110, 210);
 
     const rank = getRank(score);
     ctx.fillStyle = "cyan";
     ctx.font = "36px sans-serif";
-    ctx.fillText("Rank: " + rank, 100, 260);
+    ctx.fillText("役職: " + rank, 100, 260);
 
     ctx.fillStyle = "white";
     ctx.font = "20px sans-serif";
-    ctx.fillText("Press Enter to Retry", 110, 320);
+    ctx.fillText("もう一度（Enter）", 110, 320);
   }
 
   requestAnimationFrame(gameLoop);
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
