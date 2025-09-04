@@ -2,7 +2,7 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 // 単語リスト
-const words = ["jimura", "saitou", "hayakawa", "fujii", "uno", "usui","maegawa","higuti","uehasi","yamamoto","akane",];
+const words = ["apple", "banana", "cherry", "orange", "grape", "melon"];
 let currentWord = "";
 let currentIndex = 0;
 let score = 0;
@@ -25,12 +25,12 @@ function setNewWord() {
 
 // ランク判定
 function getRank(score) {
-  if (score >= 15) return "給食の人";
-  if (score >= 12) return "校長";
-  if (score >= 9) return "教頭";
-  if (score >= 6) return "教員";
-  if (score >= 3) return "事務職員";
-  return "ニート";
+  if (score >= 15) return "S";
+  if (score >= 12) return "A";
+  if (score >= 9) return "B";
+  if (score >= 6) return "C";
+  if (score >= 3) return "D";
+  return "E";
 }
 
 // キー入力イベント
@@ -122,16 +122,16 @@ function gameLoop() {
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
-    ctx.fillText("給料: " + Score, 110, 210);
+    ctx.fillText("役職: " + score, 110, 210);
 
     const rank = getRank(score);
     ctx.fillStyle = "cyan";
     ctx.font = "36px sans-serif";
-    ctx.fillText("役職: " + rank, 100, 260);
+    ctx.fillText("給料: " + rank, 130, 260);
 
     ctx.fillStyle = "white";
     ctx.font = "20px sans-serif";
-    ctx.fillText("もう一度（Enter）", 110, 320);
+    ctx.fillText("Press Enter to Retry", 110, 320);
   }
 
   requestAnimationFrame(gameLoop);
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
