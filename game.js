@@ -2,7 +2,7 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 // 単語リスト
-const words = ["apple", "banana", "cherry", "orange", "grape", "melon"];
+const words = ["saito","uehasi","jimura","uno","hayakawa","fujii","maegawa","usui","yamamoto","higuti","ruuku","igawa","fumuro","matui","ootani","kawaguti","akane","sugai];
 let currentWord = "";
 let currentIndex = 0;
 let score = 0;
@@ -142,6 +142,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
