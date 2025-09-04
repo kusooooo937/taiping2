@@ -112,7 +112,7 @@ function gameLoop() {
 
     // タイマー
     ctx.fillStyle = "red";
-    ctx.fillText("Time: " + timeLeft, 320, 30);
+    ctx.fillText("Time: " + timeLeft, 310, 30);
 
   } else if (gameState === "gameover") {
     // ゲームオーバー画面
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
