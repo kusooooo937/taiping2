@@ -16,7 +16,10 @@ let gameState = "start";
 // "start" → タイトル画面
 // "playing" → ゲーム中
 // "gameover" → ゲームオーバー
-
+//音楽
+const correctSound = new Audio("correct.mp3");
+const clickSound = new Audio("click.mp3");
+const errorSound = new Audio("error.mp3");
 // 新しい単語をセット
 function setNewWord() {
   currentWord = words[Math.floor(Math.random() * words.length)];
@@ -38,6 +41,8 @@ function getRankMessage(score) {
 
 // キー入力イベント
 document.addEventListener("keydown", (e) => {
+  clickSound.currentTime = 0;
+  clickSound.play();
   const key = e.key;
 
   if (gameState === "start") {
@@ -52,8 +57,13 @@ document.addEventListener("keydown", (e) => {
       if (currentIndex === currentWord.length) {
         score+=100;
         setNewWord();
+        correctSound.currentTime = 0;
+        correctSound.play();
       }
-    }
+    }else {
+      // 入力が間違っている場合
+      errorSound.currentTime = 0;
+      errorSound.play();
   } else if (gameState === "gameover") {
     // ゲームオーバー → Enterキーでリトライ
     if (key === "Enter") {
@@ -142,6 +152,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
