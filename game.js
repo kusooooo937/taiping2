@@ -118,7 +118,7 @@ function gameLoop() {
     // ゲームオーバー画面
     ctx.fillStyle = "red";
     ctx.font = "40px sans-serif";
-    ctx.fillText("退職", 90, 160);
+    ctx.fillText("退職", 130, 160);
 
     ctx.fillStyle = "yellow";
     ctx.font = "28px sans-serif";
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
