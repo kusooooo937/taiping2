@@ -108,7 +108,7 @@ function gameLoop() {
     // スコア
     ctx.fillStyle = "yellow";
     ctx.font = "20px sans-serif";
-    ctx.fillText("給料: " + score, 10, 30);
+    ctx.fillText("Score: " + score, 10, 30);
 
     // タイマー
     ctx.fillStyle = "red";
@@ -139,6 +139,7 @@ function gameLoop() {
 
 // ループ開始
 gameLoop();
+
 
 
 
