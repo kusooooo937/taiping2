@@ -5,30 +5,50 @@
   <title>自作ゲーム</title>
   <style>
     body { text-align: center; background: #111; color: #fff; }
-    canvas { border: 2px solid white; margin-top: 20px; }
-     a{color: #34495e;font-size: 18px; }
-    
+    canvas { border: 2px solid white; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+    a { color: #34495e; font-size: 18px; }
+    button { font-size: 20px; padding: 10px 20px; margin-top: 20px; }
   </style>
 </head>
 <body>
   <h1>先生タイピング</h1>
   <h2>30秒間で頑張ろう！ver1.10</h2>
-  <audio src="music.mp3" loop autoplay controls style="margin:20px 0;"></audio>
-  <script>
-  const bgm = document.getElementById('bgm');
-  bgm.volume = 0.2; // 0.0〜1.0 の範囲、0.2なら20%の音量
-</script>
+
+  <!-- ゲーム用キャンバス -->
   <canvas id="game" width="400" height="400"></canvas>
+
+  <!-- ゲーム開始ボタン -->
+  <button id="startButton">ゲーム開始</button>
+
+  <!-- BGM（非表示、JavaScriptで制御） -->
+  <audio id="bgm" src="music.mp3" loop></audio>
+
   <script src="game.js"></script>
-<p><a href="https://www.youtube.com/@%E3%83%89%E3%83%AA%E3%83%B3%E3%82%AF%E3%83%90%E3%83%BC-t6q/featured" target="_blank">YouTuBedドリンクバーはこちら</a></p>
-<h3>チャンネル登録してください</h3>
+
+  <script>
+    const startButton = document.getElementById('startButton');
+    const bgm = document.getElementById('bgm');
+
+    bgm.volume = 0.2; // 音量20%
+
+    startButton.addEventListener('click', () => {
+      // BGM再生
+      bgm.play();
+
+      // ゲーム開始関数を呼び出す（game.js内に startGame() がある場合）
+      if (typeof startGame === "function") {
+        startGame();
+      }
+
+      // ボタンを非表示にする
+      startButton.style.display = 'none';
+    });
+  </script>
+
+  <!-- YouTubeリンク -->
+  <p><a href="https://www.youtube.com/@%E3%83%89%E3%83%AA%E3%83%B3%E3%82%AF%E3%83%90%E3%83%BC-t6q/featured" target="_blank">YouTubeドリンクバーはこちら</a></p>
+
+  <!-- チャンネル登録呼びかけ -->
+  <h3>チャンネル登録してください</h3>
 </body>
 </html>
-
-
-
-
-
-
-
-
