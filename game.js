@@ -17,18 +17,20 @@ let gameState = "start";
 // "playing" → ゲーム中
 // "gameover" → ゲームオーバー
 
-// 音楽
+// 音声ファイル
 const correctSound = new Audio("correct.mp3");
 const clickSound = new Audio("click.mp3");
 const errorSound = new Audio("error.mp3");
+const gameoverSound = new Audio("gameover.mp3");
 
 // 新しい単語をセット
 function setNewWord() {
-  currentWord = words[Math.floor(Math.random() * words.length)];
-  currentIndex = 0;
+    currentWord = words[Math.floor(Math.random() * words.length)];
+    currentIndex = 0;
 }
 
-// ランク判定
+// ランク判定とメッセージ
+
 function getRankMessage(score) {
   if (score >= 1500) return { rank: "給食の人", message: "食でみんなを支配！" };
   if (score >= 1200) return { rank: "校長", message: "学校の頂点！" };
@@ -40,118 +42,108 @@ function getRankMessage(score) {
 
 // キー入力イベント
 document.addEventListener("keydown", (e) => {
-  clickSound.currentTime = 0;
-  clickSound.play();
-  const key = e.key;
+    clickSound.currentTime = 0;
+    clickSound.play();
 
-  if (gameState === "start") {
-    if (key === "Enter") startGame();
-  } else if (gameState === "playing") {
-    if (key === currentWord[currentIndex]) {
-      currentIndex++;
-      if (currentIndex === currentWord.length) {
-        score += 100;
-        setNewWord();
-        correctSound.currentTime = 0;
-        correctSound.play();
-      }
-    } else {
-      errorSound.currentTime = 0;
-      errorSound.play();
+    const key = e.key;
+
+    if (gameState === "start") {
+        if (key === "Enter") startGame();
+    } else if (gameState === "playing") {
+        if (key === currentWord[currentIndex]) {
+            currentIndex++;
+            if (currentIndex === currentWord.length) {
+                score += 100;
+                setNewWord();
+                correctSound.currentTime = 0;
+                correctSound.play();
+            }
+        } else {
+            errorSound.currentTime = 0;
+            errorSound.play();
+        }
+    } else if (gameState === "gameover") {
+        if (key === "Enter") startGame();
     }
-  } else if (gameState === "gameover") {
-    if (key === "Enter") startGame();
-  }
 });
 
 // ゲーム開始
 function startGame() {
-  score = 0;
-  timeLeft = timeLimit;
-  gameState = "playing";
-  setNewWord();
+    score = 0;
+    timeLeft = timeLimit;
+    gameState = "playing";
+    setNewWord();
 
-  // タイマー開始
-  let timer = setInterval(() => {
-    if (gameState === "playing") {
-      timeLeft--;
-      if (timeLeft <= 0) {
-        gameState = "gameover";
-        clearInterval(timer);
-      }
-    } else {
-      clearInterval(timer);
-    }
-  }, 1000);
+    // タイマー開始
+    let timer = setInterval(() => {
+        if (gameState === "playing") {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                gameState = "gameover";
+                gameoverSound.currentTime = 0;
+                gameoverSound.play();
+                clearInterval(timer);
+            }
+        } else {
+            clearInterval(timer);
+        }
+    }, 1000);
 }
 
 // ゲームループ
 function gameLoop() {
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  if (gameState === "start") {
-    ctx.fillStyle = "white";
-    ctx.font = "36px sans-serif";
-    ctx.fillText("Typing Game", 90, 150);
+    if (gameState === "start") {
+        ctx.fillStyle = "white";
+        ctx.font = "36px sans-serif";
+        ctx.fillText("Typing Game", 90, 150);
 
-    ctx.font = "24px sans-serif";
-    ctx.fillStyle = "yellow";
-    ctx.fillText("Press Enter to Start", 90, 220);
+        ctx.font = "24px sans-serif";
+        ctx.fillStyle = "yellow";
+        ctx.fillText("Press Enter to Start", 90, 220);
 
-  } else if (gameState === "playing") {
-    ctx.fillStyle = "white";
-    ctx.font = "32px sans-serif";
-    ctx.fillText(currentWord, 100, 200);
+    } else if (gameState === "playing") {
+        // 単語
+        ctx.fillStyle = "white";
+        ctx.font = "32px sans-serif";
+        ctx.fillText(currentWord, 100, 200);
 
-    ctx.fillStyle = "lime";
-    ctx.fillText(currentWord.substring(0, currentIndex), 100, 200);
+        // 入力済み部分を緑で表示
+        ctx.fillStyle = "lime";
+        ctx.fillText(currentWord.substring(0, currentIndex), 100, 200);
 
-    ctx.fillStyle = "yellow";
-    ctx.font = "20px sans-serif";
-    ctx.fillText("給料: " + score + "万円", 10, 30);
+        // スコア
+        ctx.fillStyle = "yellow";
+        ctx.font = "20px sans-serif";
+        ctx.fillText("給料: " + score + "万円", 10, 30);
 
-    ctx.fillStyle = "red";
-    ctx.fillText("Time: " + timeLeft, 310, 30);
+        // タイマー
+        ctx.fillStyle = "red";
+        ctx.fillText("Time: " + timeLeft, 310, 30);
 
-  } else if (gameState === "gameover") {
-    const result = getRankMessage(score); 
-    ctx.fillStyle = "white";
-    ctx.font = "40px sans-serif";
-    ctx.fillText(result.rank, 130, 160);
+    } else if (gameState === "gameover") {
+        const result = getRankMessage(score);
+        ctx.fillStyle = "white";
+        ctx.font = "40px sans-serif";
+        ctx.fillText(result.message, 50, 160);
 
-    ctx.fillStyle = "yellow";
-    ctx.font = "28px sans-serif";
-    ctx.fillText("給料: " + score + "万円", 130, 210);
+        ctx.fillStyle = "yellow";
+        ctx.font = "28px sans-serif";
+        ctx.fillText("給料: " + score + "万円", 130, 210);
 
-    ctx.fillStyle = "cyan";
-    ctx.font = "24px sans-serif";
-    ctx.fillText(result.message, 80, 260);
+        ctx.fillStyle = "cyan";
+        ctx.font = "36px sans-serif";
+        ctx.fillText("役職: " + result.rank, 130, 260);
 
-    ctx.fillStyle = "white";
-    ctx.font = "20px sans-serif";
-    ctx.fillText("Press Enter to Retry", 110, 320);
-  }
+        ctx.fillStyle = "white";
+        ctx.font = "20px sans-serif";
+        ctx.fillText("Press Enter to Retry", 110, 320);
+    }
 
-  requestAnimationFrame(gameLoop);
+    requestAnimationFrame(gameLoop);
 }
 
 // ループ開始
 gameLoop();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
